@@ -5,6 +5,7 @@ import ContractorDashboard from './screens/ContractorDashboard'
 import ContractorOnboarding from './screens/ContractorOnboarding'
 import CoiRequestWizard from './screens/CoiRequestWizard'
 import AgentDashboard from './screens/AgentDashboard'
+import AgentRequestDetail from './screens/AgentRequestDetail'
 import AdminDashboard from './screens/AdminDashboard'
 
 function roleHome(role) {
@@ -84,6 +85,14 @@ export default function App() {
           element={
             <ProtectedRoute role="agent">
               <AgentDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/agent/request/:id"
+          element={
+            <ProtectedRoute role="agent">
+              <AgentRequestDetail />
             </ProtectedRoute>
           }
         />
