@@ -4,6 +4,7 @@ import Login from './screens/Login'
 import ContractorDashboard from './screens/ContractorDashboard'
 import ContractorOnboarding from './screens/ContractorOnboarding'
 import CoiRequestWizard from './screens/CoiRequestWizard'
+import ContractorHistory from './screens/ContractorHistory'
 import AgentDashboard from './screens/AgentDashboard'
 import AgentRequestDetail from './screens/AgentRequestDetail'
 import AdminDashboard from './screens/AdminDashboard'
@@ -77,6 +78,14 @@ export default function App() {
           element={
             <ProtectedRoute role="contractor">
               <CoiRequestWizard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/contractor/history"
+          element={
+            <ProtectedRoute role="contractor">
+              <ContractorHistory />
             </ProtectedRoute>
           }
         />

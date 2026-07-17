@@ -50,6 +50,10 @@ export default function ContractorDashboard() {
           Request a COI
         </Button>
       </Card>
+      <div className="section-spacer" />
+      <Button variant="secondary" onClick={() => navigate('/contractor/history')}>
+        View past requests
+      </Button>
     </div>
   )
 }
