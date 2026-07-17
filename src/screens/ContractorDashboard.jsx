@@ -1,9 +1,11 @@
 import Card from '../components/Card'
 import Button from '../components/Button'
+import AppHeader from '../components/AppHeader'
 
 export default function ContractorDashboard() {
   return (
     <div className="screen">
+      <AppHeader />
       <h1>Dashboard</h1>
       <Card>
         <h2>Need a COI for a new job?</h2>
