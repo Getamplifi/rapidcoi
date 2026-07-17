@@ -95,21 +95,40 @@ export default function CoiRequestWizard() {
       certificateHolderId = newHolder.id
     }
 
-    const { error: requestError } = await supabase.from('coi_requests').insert({
-      contractor_id: session.user.id,
-      agent_id: profile.agent_id,
-      certificate_holder_id: certificateHolderId,
-      certificate_holder_name: holderName,
-      certificate_holder_address: `${holderAddress}, ${holderCity}, ${holderState} ${holderZip}`,
-      description_of_operations: description,
-      has_exceptions: hasExceptions === true,
-      exception_details: hasExceptions ? exceptionDetails : null,
-    })
+    const { data: newRequest, error: requestError } = await supabase
+      .from('coi_requests')
+      .insert({
+        contractor_id: session.user.id,
+        agent_id: profile.agent_id,
+        certificate_holder_id: certificateHolderId,
+        certificate_holder_name: holderName,
+        certificate_holder_address: `${holderAddress}, ${holderCity}, ${holderState} ${holderZip}`,
+        description_of_operations: description,
+        has_exceptions: hasExceptions === true,
+        exception_details: hasExceptions ? exceptionDetails : null,
+        status: hasExceptions ? 'flagged' : 'ready_for_review',
+      })
+      .select()
+      .single()
 
     if (requestError) {
       setStatus('error')
       setErrorMsg(requestError.message)
       return
+    }
+
+    // Best-effort: the request is already saved even if PDF generation hiccups.
+    try {
+      await fetch('/api/generate-coi', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${session.access_token}`,
+        },
+        body: JSON.stringify({ requestId: newRequest.id }),
+      })
+    } catch {
+      // The agent's queue can still pick this up; PDF generation can be retried later.
     }
 
     navigate('/contractor')
