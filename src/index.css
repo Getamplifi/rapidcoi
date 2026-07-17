@@ -139,6 +139,49 @@ textarea:focus {
   outline-offset: 1px;
 }
 
+textarea {
+  min-height: 88px;
+  padding: 12px 14px;
+  resize: vertical;
+}
+
+/* Checkboxes need a smaller touch target than text inputs */
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: var(--touch-target);
+}
+
+.checkbox-row input[type='checkbox'],
+.checkbox-row input[type='radio'] {
+  width: 20px;
+  height: 20px;
+  min-height: 0;
+  accent-color: var(--color-navy);
+  flex-shrink: 0;
+}
+
+.checkbox-row label {
+  font-weight: 400;
+  margin: 0;
+}
+
+.field-group {
+  margin-bottom: 16px;
+}
+
+.field-group label {
+  display: block;
+  margin-bottom: 6px;
+}
+
+.field-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
 /* Status badges */
 .badge {
   display: inline-block;
@@ -168,4 +211,37 @@ textarea:focus {
   max-width: 480px;
   margin: 0 auto;
   padding: 24px 16px 40px;
+}
+
+.section-spacer {
+  height: 16px;
+}
+
+.step-indicator {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.step-indicator .dot {
+  flex: 1;
+  height: 4px;
+  border-radius: 2px;
+  background: var(--color-border);
+}
+
+.step-indicator .dot.active {
+  background: var(--color-navy);
+}
+
+.review-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.review-row:last-child {
+  border-bottom: none;
 }

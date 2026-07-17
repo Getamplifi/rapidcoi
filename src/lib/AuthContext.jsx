@@ -16,13 +16,13 @@ export function AuthProvider({ children }) {
     return () => listener.subscription.unsubscribe()
   }, [])
 
-  useEffect(() => {
+  function fetchProfile() {
     if (!session) {
       setProfile(null)
       return
     }
     setProfileLoading(true)
-    supabase
+    return supabase
       .from('profiles')
       .select('*')
       .eq('id', session.user.id)
@@ -31,12 +31,19 @@ export function AuthProvider({ children }) {
         setProfile(error ? null : data)
         setProfileLoading(false)
       })
+  }
+
+  useEffect(() => {
+    fetchProfile()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [session])
 
   const loading = session === undefined || (!!session && profileLoading)
 
   return (
-    <AuthContext.Provider value={{ session, profile, loading, signOut: () => supabase.auth.signOut() }}>
+    <AuthContext.Provider
+      value={{ session, profile, loading, refreshProfile: fetchProfile, signOut: () => supabase.auth.signOut() }}
+    >
       {children}
     </AuthContext.Provider>
   )

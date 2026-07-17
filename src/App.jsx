@@ -2,6 +2,8 @@ import { Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider, useAuth } from './lib/AuthContext'
 import Login from './screens/Login'
 import ContractorDashboard from './screens/ContractorDashboard'
+import ContractorOnboarding from './screens/ContractorOnboarding'
+import CoiRequestWizard from './screens/CoiRequestWizard'
 import AgentDashboard from './screens/AgentDashboard'
 import AdminDashboard from './screens/AdminDashboard'
 
@@ -58,6 +60,22 @@ export default function App() {
           element={
             <ProtectedRoute role="contractor">
               <ContractorDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/contractor/onboarding"
+          element={
+            <ProtectedRoute role="contractor">
+              <ContractorOnboarding />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/contractor/request"
+          element={
+            <ProtectedRoute role="contractor">
+              <CoiRequestWizard />
             </ProtectedRoute>
           }
         />
